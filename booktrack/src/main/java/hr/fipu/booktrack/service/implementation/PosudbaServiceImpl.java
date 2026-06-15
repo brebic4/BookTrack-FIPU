@@ -100,4 +100,9 @@ public class PosudbaServiceImpl implements PosudbaService {
         return posudba.getStatus() == StatusPosudbe.AKTIVNA
                 && LocalDate.now().isAfter(posudba.getRokPovrata());
     }
+
+    @Override
+    public List<Posudba> findLastFive() {
+        return posudbaRepository.findTop5ByOrderByIdDesc();
+    }
 }

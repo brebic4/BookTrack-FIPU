@@ -13,4 +13,5 @@ public interface PosudbaService {
     Posudba create(PosudbaRequest request);
     Posudba vratiKnjigu(Long posudbaId);
     boolean kasni(Posudba posudba);
+    List<Posudba> findLastFive();
 }

@@ -14,4 +14,5 @@ public interface PosudbaRepository extends JpaRepository<Posudba, Long> {
     Optional<Posudba> findByKnjigaIdAndStatus(Long knjigaId, StatusPosudbe status);
     boolean existsByKnjigaIdAndStatus(Long knjigaId, StatusPosudbe status);
     long countByStatus(StatusPosudbe status);
+    List<Posudba> findTop5ByOrderByIdDesc();
 }

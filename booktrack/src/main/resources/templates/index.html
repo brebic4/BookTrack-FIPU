@@ -18,13 +18,35 @@
         </p>
     </div>
 
+    <div class="row g-3 mb-3">
+
+        <div class="col-md-4">
+            <a href="/knjige" class="btn btn-primary w-100">
+                Upravljanje knjigama
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/kategorije" class="btn btn-success w-100">
+                Upravljanje kategorijama
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/posudbe" class="btn btn-warning w-100">
+                Upravljanje posudbama
+            </a>
+        </div>
+
+    </div>
+
     <div class="row g-4">
 
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h5>Ukupno knjiga</h5>
-                    <h2 th:text="${brojKnjiga}"></h2>
+                    <h2 th:text="${brojKnjiga}">0</h2>
                 </div>
             </div>
         </div>
@@ -33,7 +55,7 @@
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h5>Dostupne knjige</h5>
-                    <h2 th:text="${brojDostupnih}"></h2>
+                    <h2 th:text="${brojDostupnih}">0</h2>
                 </div>
             </div>
         </div>
@@ -42,7 +64,7 @@
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h5>Posuđene knjige</h5>
-                    <h2 th:text="${brojPosudenih}"></h2>
+                    <h2 th:text="${brojPosudenih}">0</h2>
                 </div>
             </div>
         </div>
@@ -51,7 +73,7 @@
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h5>Kategorije</h5>
-                    <h2 th:text="${brojKategorija}"></h2>
+                    <h2 th:text="${brojKategorija}">0</h2>
                 </div>
             </div>
         </div>
@@ -60,7 +82,7 @@
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h5>Aktivne posudbe</h5>
-                    <h2 th:text="${brojAktivnihPosudbi}"></h2>
+                    <h2 th:text="${brojAktivnihPosudbi}">0</h2>
                 </div>
             </div>
         </div>
@@ -89,28 +111,58 @@
 
     </div>
 
-    <hr>
+    <div class="card shadow-sm mt-4 mb-4">
+        <div class="card-body">
 
-    <div class="row g-3">
+            <h4 class="mb-3">Zadnje posudbe</h4>
 
-        <div class="col-md-4 mb-3">
-            <a href="/knjige" class="btn btn-primary w-100">
-                Upravljanje knjigama
+            <table class="table table-bordered table-striped align-middle">
+                <thead>
+                <tr>
+                    <th>Knjiga</th>
+                    <th>Korisnik</th>
+                    <th>Datum posudbe</th>
+                    <th>Rok povrata</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="posudba : ${zadnjePosudbe}">
+                    <td th:text="${posudba.knjiga.naslov}">Naslov knjige</td>
+                    <td th:text="${posudba.imeKorisnika}">Korisnik</td>
+                    <td th:text="${posudba.datumPosudbe}">2026-06-15</td>
+                    <td th:text="${posudba.rokPovrata}">2026-06-29</td>
+                    <td>
+                        <span th:if="${posudba.status.name() == 'VRACENA'}" class="badge bg-success">
+                            Vraćena
+                        </span>
+
+                        <span th:if="${posudba.status.name() == 'AKTIVNA' and !posudbaService.kasni(posudba)}"
+                              class="badge bg-primary">
+                            Aktivna
+                        </span>
+
+                        <span th:if="${posudba.status.name() == 'AKTIVNA' and posudbaService.kasni(posudba)}"
+                              class="badge bg-danger">
+                            Kasni
+                        </span>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(zadnjePosudbe)}">
+                    <td colspan="5" class="text-center text-muted">
+                        Još nema evidentiranih posudbi.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <a href="/posudbe" class="btn btn-outline-primary">
+                Prikaži sve posudbe
             </a>
-        </div>
 
-        <div class="col-md-4">
-            <a href="/kategorije" class="btn btn-success w-100">
-                Upravljanje kategorijama
-            </a>
         </div>
-
-        <div class="col-md-4">
-            <a href="/posudbe" class="btn btn-warning w-100">
-                Upravljanje posudbama
-            </a>
-        </div>
-
     </div>
 
 </div>
