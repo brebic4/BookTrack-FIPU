@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="hr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Knjige</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Knjige</h1>
+        <a href="/knjige/nova" class="btn btn-primary">Dodaj knjigu</a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+    <form method="get" action="/knjige" class="row g-2 mb-4">
+
+        <div class="col-md-3">
+            <input type="text"
+                   name="keyword"
+                   class="form-control"
+                   placeholder="Pretraži naslov ili autora"
+                   th:value="${keyword}">
+        </div>
+
+        <div class="col-md-3">
+            <select name="kategorijaId" class="form-select">
+                <option value="">Sve kategorije</option>
+                <option th:each="kategorija : ${kategorije}"
+                        th:value="${kategorija.id}"
+                        th:text="${kategorija.naziv}"
+                        th:selected="${kategorijaId != null and kategorijaId == kategorija.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select name="dostupna" class="form-select">
+                <option value="">Svi statusi</option>
+                <option value="true" th:selected="${dostupna != null and dostupna == true}">Dostupne</option>
+                <option value="false" th:selected="${dostupna != null and dostupna == false}">Posuđene</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select name="sort" class="form-select">
+                <option value="naslov_asc" th:selected="${sort == null or sort == 'naslov_asc'}">Naslov A-Z</option>
+                <option value="naslov_desc" th:selected="${sort == 'naslov_desc'}">Naslov Z-A</option>
+                <option value="godina_desc" th:selected="${sort == 'godina_desc'}">Najnovije</option>
+                <option value="godina_asc" th:selected="${sort == 'godina_asc'}">Najstarije</option>
+            </select>
+        </div>
+
+        <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary w-100">Filtriraj</button>
+            <a href="/knjige" class="btn btn-outline-secondary">Reset</a>
+        </div>
+
+    </form>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Naslov</th>
+            <th>Autor</th>
+            <th>Godina</th>
+            <th>Kategorija</th>
+            <th>Dostupnost</th>
+            <th>Akcije</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="knjiga : ${knjige}">
+            <td th:text="${knjiga.id}"></td>
+            <td th:text="${knjiga.naslov}"></td>
+            <td th:text="${knjiga.autor}"></td>
+            <td th:text="${knjiga.godinaIzdanja}"></td>
+            <td th:text="${knjiga.kategorija.naziv}"></td>
+            <td>
+                <span th:if="${knjiga.dostupna}" class="badge bg-success">Dostupna</span>
+                <span th:unless="${knjiga.dostupna}" class="badge bg-danger">Posuđena</span>
+            </td>
+            <td>
+                <a th:href="@{/knjige/{id}(id=${knjiga.id})}" class="btn btn-sm btn-info">Detalji</a>
+
+                <a th:href="@{/knjige/{id}/uredi(id=${knjiga.id})}" class="btn btn-sm btn-warning">
+                    Uredi
+                </a>
+
+                <form th:action="@{/knjige/{id}/obrisi(id=${knjiga.id})}"
+                      method="post"
+                      style="display:inline;">
+                    <button type="submit"
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm('Jeste li sigurni da želite obrisati knjigu?')">
+                        Obriši
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(knjige)}">
+            <td colspan="7" class="text-center text-muted">
+                Nema pronađenih knjiga.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/" class="btn btn-secondary">Natrag na početnu</a>
+</div>
+
+</body>
+</html>

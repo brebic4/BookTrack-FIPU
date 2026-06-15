@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="hr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalji knjige</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h1 th:text="${knjiga.naslov}">Naslov knjige</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <p><strong>Autor:</strong> <span th:text="${knjiga.autor}"></span></p>
+            <p><strong>Godina izdanja:</strong> <span th:text="${knjiga.godinaIzdanja}"></span></p>
+            <p><strong>ISBN:</strong> <span th:text="${knjiga.isbn}"></span></p>
+            <p><strong>Kategorija:</strong> <span th:text="${knjiga.kategorija.naziv}"></span></p>
+            <p>
+                <strong>Status:</strong>
+                <span th:if="${knjiga.dostupna}" class="badge bg-success">Dostupna</span>
+                <span th:unless="${knjiga.dostupna}" class="badge bg-danger">Posuđena</span>
+            </p>
+        </div>
+    </div>
+
+    <h3>Povijest posudbi</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Korisnik</th>
+            <th>Email</th>
+            <th>Datum posudbe</th>
+            <th>Rok povrata</th>
+            <th>Datum povrata</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="posudba : ${posudbe}">
+            <td th:text="${posudba.imeKorisnika}"></td>
+            <td th:text="${posudba.emailKorisnika}"></td>
+            <td th:text="${posudba.datumPosudbe}"></td>
+            <td th:text="${posudba.rokPovrata}"></td>
+            <td th:text="${posudba.datumPovrata != null ? posudba.datumPovrata : '-'}"></td>
+            <td>
+                <span th:if="${posudba.status.name() == 'VRACENA'}" class="badge bg-success">Vraćena</span>
+                <span th:if="${posudba.status.name() == 'AKTIVNA' and !posudbaService.kasni(posudba)}"
+                      class="badge bg-primary">Aktivna</span>
+                <span th:if="${posudba.status.name() == 'AKTIVNA' and posudbaService.kasni(posudba)}"
+                      class="badge bg-danger">Kasni</span>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(posudbe)}">
+            <td colspan="6" class="text-center text-muted">
+                Knjiga još nema evidentiranih posudbi.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/knjige/{id}/uredi(id=${knjiga.id})}" class="btn btn-warning">Uredi</a>
+    <a href="/knjige" class="btn btn-secondary">Natrag na knjige</a>
+
+</div>
+
+</body>
+</html>
