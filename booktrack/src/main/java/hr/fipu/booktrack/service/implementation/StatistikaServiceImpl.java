@@ -77,4 +77,58 @@ public class StatistikaServiceImpl implements StatistikaService {
 
         return rezultat;
     }
+
+    @Override
+    public String najposudivanijaKnjiga() {
+        return knjigaRepository.findAll()
+                .stream()
+                .max((k1, k2) -> Integer.compare(k1.getPosudbe().size(), k2.getPosudbe().size()))
+                .filter(knjiga -> !knjiga.getPosudbe().isEmpty())
+                .map(knjiga -> knjiga.getNaslov() + " (" + knjiga.getPosudbe().size() + " posudbi)")
+                .orElse("Nema posudbi");
+    }
+
+    @Override
+    public String najpopularnijaKategorija() {
+        return kategorijaRepository.findAll()
+                .stream()
+                .max((k1, k2) -> {
+                    int brojPosudbiK1 = k1.getKnjige()
+                            .stream()
+                            .mapToInt(knjiga -> knjiga.getPosudbe().size())
+                            .sum();
+
+                    int brojPosudbiK2 = k2.getKnjige()
+                            .stream()
+                            .mapToInt(knjiga -> knjiga.getPosudbe().size())
+                            .sum();
+
+                    return Integer.compare(brojPosudbiK1, brojPosudbiK2);
+                })
+                .map(kategorija -> {
+                    int brojPosudbi = kategorija.getKnjige()
+                            .stream()
+                            .mapToInt(knjiga -> knjiga.getPosudbe().size())
+                            .sum();
+
+                    if (brojPosudbi == 0) {
+                        return "Nema posudbi";
+                    }
+
+                    return kategorija.getNaziv() + " (" + brojPosudbi + " posudbi)";
+                })
+                .orElse("Nema kategorija");
+    }
+
+    @Override
+    public double prosjecanBrojPosudbiPoKnjizi() {
+        long brojKnjiga = knjigaRepository.count();
+        long brojPosudbi = posudbaRepository.count();
+
+        if (brojKnjiga == 0) {
+            return 0;
+        }
+
+        return (double) brojPosudbi / brojKnjiga;
+    }
 }

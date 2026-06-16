@@ -9,6 +9,11 @@ public interface StatistikaService {
     long brojPosudenihKnjiga();
     long brojKategorija();
     long brojAktivnihPosudbi();
+    String najposudivanijaKnjiga();
+    String najpopularnijaKategorija();
+    double prosjecanBrojPosudbiPoKnjizi();
     Map<String, Long> brojKnjigaPoKategorijama();
     Map<String, Long> brojPosudbiPoKategorijama();
+
+
 }

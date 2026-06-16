@@ -23,6 +23,9 @@ public class StatistikaController {
         model.addAttribute("brojAktivnihPosudbi", statistikaService.brojAktivnihPosudbi());
         model.addAttribute("knjigePoKategorijama", statistikaService.brojKnjigaPoKategorijama());
         model.addAttribute("posudbePoKategorijama", statistikaService.brojPosudbiPoKategorijama());
+        model.addAttribute("najposudivanijaKnjiga", statistikaService.najposudivanijaKnjiga());
+        model.addAttribute("najpopularnijaKategorija", statistikaService.najpopularnijaKategorija());
+        model.addAttribute("prosjecanBrojPosudbiPoKnjizi", statistikaService.prosjecanBrojPosudbiPoKnjizi());
         model.addAttribute("activePage", "statistika");
 
         return "statistika/index";

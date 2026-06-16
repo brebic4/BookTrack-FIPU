@@ -51,6 +51,44 @@
 
     </div>
 
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-primary">
+                <div class="card-body">
+                    <h5>Najposuđivanija knjiga</h5>
+                    <p class="fw-bold" th:text="${najposudivanijaKnjiga}">
+                        Nema podataka
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-success">
+                <div class="card-body">
+                    <h5>Najpopularnija kategorija</h5>
+                    <p class="fw-bold" th:text="${najpopularnijaKategorija}">
+                        Nema podataka
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-dark">
+                <div class="card-body">
+                    <h5>Prosjek posudbi po knjizi</h5>
+                    <p class="fw-bold"
+                       th:text="${#numbers.formatDecimal(prosjecanBrojPosudbiPoKnjizi, 1, 2)}">
+                        0.00
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <div class="row g-4">
 
         <div class="col-md-6">
