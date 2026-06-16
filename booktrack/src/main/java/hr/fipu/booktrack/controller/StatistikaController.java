@@ -23,6 +23,7 @@ public class StatistikaController {
         model.addAttribute("brojAktivnihPosudbi", statistikaService.brojAktivnihPosudbi());
         model.addAttribute("knjigePoKategorijama", statistikaService.brojKnjigaPoKategorijama());
         model.addAttribute("posudbePoKategorijama", statistikaService.brojPosudbiPoKategorijama());
+        model.addAttribute("activePage", "statistika");
 
         return "statistika/index";
     }

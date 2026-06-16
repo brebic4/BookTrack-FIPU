@@ -27,7 +27,7 @@ public class HomeController {
         model.addAttribute("brojAktivnihPosudbi", statistikaService.brojAktivnihPosudbi());
         model.addAttribute("zadnjePosudbe", posudbaService.findLastFive());
         model.addAttribute("posudbaService", posudbaService);
-
+        model.addAttribute("activePage", "home");
         return "index";
     }
 }

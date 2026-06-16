@@ -41,6 +41,7 @@ public class KnjigaController {
         model.addAttribute("kategorijaId", kategorijaId);
         model.addAttribute("dostupna", dostupna);
         model.addAttribute("sort", sort);
+        model.addAttribute("activePage", "knjige");
 
         return "knjige/lista";
     }
@@ -52,6 +53,7 @@ public class KnjigaController {
         model.addAttribute("knjiga", knjiga);
         model.addAttribute("posudbe", posudbaService.findByKnjigaId(id));
         model.addAttribute("posudbaService", posudbaService);
+        model.addAttribute("activePage", "knjige");
 
         return "knjige/detalji";
     }
@@ -62,6 +64,8 @@ public class KnjigaController {
         model.addAttribute("kategorije", kategorijaService.findAll());
         model.addAttribute("title", "Dodaj knjigu");
         model.addAttribute("action", "/knjige");
+        model.addAttribute("activePage", "knjige");
+
         return "knjige/forma";
     }
 
@@ -99,6 +103,8 @@ public class KnjigaController {
         model.addAttribute("kategorije", kategorijaService.findAll());
         model.addAttribute("title", "Uredi knjigu");
         model.addAttribute("action", "/knjige/" + id);
+        model.addAttribute("activePage", "knjige");
+
         return "knjige/forma";
     }
 

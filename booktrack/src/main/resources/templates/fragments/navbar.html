@@ -27,40 +27,35 @@
 
             <ul class="navbar-nav ms-auto">
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/}">
-                        Početna
-                    </a>
-                </li>
+                <a class="nav-link"
+                   th:classappend="${activePage == 'home'} ? 'active fw-bold'"
+                   th:href="@{/}">
+                    Početna
+                </a>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/knjige}">
-                        Knjige
-                    </a>
-                </li>
+                <a class="nav-link"
+                   th:classappend="${activePage == 'knjige'} ? 'active fw-bold'"
+                   th:href="@{/knjige}">
+                    Knjige
+                </a>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/kategorije}">
-                        Kategorije
-                    </a>
-                </li>
+                <a class="nav-link"
+                   th:classappend="${activePage == 'kategorije'} ? 'active fw-bold'"
+                   th:href="@{/kategorije}">
+                    Kategorije
+                </a>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/posudbe}">
-                        Posudbe
-                    </a>
-                </li>
+                <a class="nav-link"
+                   th:classappend="${activePage == 'posudbe'} ? 'active fw-bold'"
+                   th:href="@{/posudbe}">
+                    Posudbe
+                </a>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/statistika}">
-                        Statistika
-                    </a>
-                </li>
+                <a class="nav-link"
+                   th:classappend="${activePage == 'statistika'} ? 'active fw-bold'"
+                   th:href="@{/statistika}">
+                    Statistika
+                </a>
 
             </ul>
 

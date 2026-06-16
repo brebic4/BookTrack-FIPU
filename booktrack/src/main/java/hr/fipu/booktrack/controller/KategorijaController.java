@@ -22,6 +22,8 @@ public class KategorijaController {
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("kategorije", kategorijaService.findAll());
+        model.addAttribute("activePage", "kategorije");
+
         return "kategorije/lista";
     }
 
@@ -30,6 +32,8 @@ public class KategorijaController {
         model.addAttribute("kategorijaRequest", new KategorijaRequest());
         model.addAttribute("title", "Dodaj kategoriju");
         model.addAttribute("action", "/kategorije");
+        model.addAttribute("activePage", "kategorije");
+
         return "kategorije/forma";
     }
 
@@ -69,6 +73,8 @@ public class KategorijaController {
         model.addAttribute("kategorijaRequest", request);
         model.addAttribute("title", "Uredi kategoriju");
         model.addAttribute("action", "/kategorije/" + id);
+        model.addAttribute("activePage", "kategorije");
+
         return "kategorije/forma";
     }
 

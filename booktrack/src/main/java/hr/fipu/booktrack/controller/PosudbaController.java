@@ -27,6 +27,8 @@ public class PosudbaController {
     public String findAll(Model model) {
         model.addAttribute("posudbe", posudbaService.findAll());
         model.addAttribute("posudbaService", posudbaService);
+        model.addAttribute("activePage", "posudbe");
+
         return "posudbe/lista";
     }
 
@@ -40,6 +42,8 @@ public class PosudbaController {
 
         model.addAttribute("posudbaRequest", request);
         model.addAttribute("knjige", knjigaService.findAll());
+        model.addAttribute("activePage", "posudbe");
+
         return "posudbe/forma";
     }
 
